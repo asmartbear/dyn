@@ -1,6 +1,6 @@
 {
   "name": "@asmartbear/dyn",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Dynamic array, iterable, list, and map utilities with good support for Typescript",
   "keywords": [],
   "scripts": {
