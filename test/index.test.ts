@@ -515,6 +515,8 @@ test('FROM_ENTRIES', () => {
 test('NOT_EMPTY', () => {
     expect(D.NOT_EMPTY(undefined)).toEqual(false)
     expect(D.NOT_EMPTY(null)).toEqual(false)
+    expect(D.NOT_EMPTY("")).toEqual(false)
+    expect(D.NOT_EMPTY("!")).toEqual(true)
     expect(D.NOT_EMPTY([])).toEqual(false)
     expect(D.NOT_EMPTY([1])).toEqual(true)
     expect(D.NOT_EMPTY({})).toEqual(false)
