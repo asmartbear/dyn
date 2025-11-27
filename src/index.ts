@@ -89,6 +89,13 @@ export function fieldListFromDotString(fieldPath: string): string[] {
 }
 
 /**
+ * Asserts that a given value never happens, which throws an error at run-time and tells Typescript it doesn't happen.
+ */
+export function NEVER(value: never): never {
+    throw new Error(`FATAL: assertNever(): Shouldn't get here: ${value}`);
+}
+
+/**
  * Use like `then()` but when the input is a `MaybePromise<T>` instead of a `Promise<T>`.
  * 
  * Specifically: Given a value that is either a Promise or not, and the (maybe promise, maybe not!)
