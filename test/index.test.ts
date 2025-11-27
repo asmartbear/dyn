@@ -511,3 +511,16 @@ test('FROM_ENTRIES', () => {
     expect(D.FROM_ENTRIES([['foo', 123], ['bar', 321]])).toEqual({ foo: 123, bar: 321 })
     expect(D.FROM_ENTRIES([['foo', 123], ['bar', 'baz']])).toEqual({ foo: 123, bar: 'baz' })
 })
+
+test('NOT_EMPTY', () => {
+    expect(D.NOT_EMPTY(undefined)).toEqual(false)
+    expect(D.NOT_EMPTY(null)).toEqual(false)
+    expect(D.NOT_EMPTY([])).toEqual(false)
+    expect(D.NOT_EMPTY([1])).toEqual(true)
+    expect(D.NOT_EMPTY({})).toEqual(false)
+    expect(D.NOT_EMPTY({ a: 1 })).toEqual(true)
+    expect(D.NOT_EMPTY(new Set<string>())).toEqual(false)
+    expect(D.NOT_EMPTY(new Set<string>(['hi']))).toEqual(true)
+    expect(D.NOT_EMPTY(new Map<string, number>())).toEqual(false)
+    expect(D.NOT_EMPTY(new Map([['hi', 123]]))).toEqual(true)
+})

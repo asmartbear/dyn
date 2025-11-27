@@ -189,6 +189,13 @@ export function LEN(a: ArrayLike<any> | Map<any, any> | Set<any> | Record<any, a
 }
 
 /**
+ * True if this object is not `Nullish` and not empty; tells Typescript it's not `Nullish` at least.
+ */
+export function NOT_EMPTY<T extends Array<any> | Iterable<any> | Map<any, any> | Set<any> | Record<any, any> | string>(a: T | Nullish): a is T {
+    return LEN(a) > 0
+}
+
+/**
  * Returns the `i`th element, or negative to index from the end, undefined if out of range or Nullish
  */
 export function AT(a: null | undefined, i: number): undefined
