@@ -92,6 +92,7 @@ export function fieldListFromDotString(fieldPath: string): string[] {
  * Asserts that a given value never happens, which throws an error at run-time and tells Typescript it doesn't happen.
  */
 export function NEVER(value: never): never {
+    // istanbul ignore next
     throw new Error(`FATAL: assertNever(): Shouldn't get here: ${value}`);
 }
 
@@ -103,6 +104,7 @@ export function NEVER(value: never): never {
  * if the input wasn't a promise, it creates the "then" promise function directly.
  */
 export function THEN<T, R>(input: MaybePromise<T>, fThen: (x: T) => MaybePromise<R>): MaybePromise<R> {
+    // istanbul ignore next
     return (input instanceof Promise) ? input.then(fThen) : fThen(input)
 }
 
@@ -110,6 +112,7 @@ export function THEN<T, R>(input: MaybePromise<T>, fThen: (x: T) => MaybePromise
  * Same as `THEN` but chaining two functions
  */
 export function THEN2<T, R1, R2>(input: MaybePromise<T>, fThen1: (x: T) => MaybePromise<R1>, fThen2: (x: R1) => MaybePromise<R2>): MaybePromise<R2> {
+    // istanbul ignore next
     return THEN(THEN(input, fThen1), fThen2)
 }
 
@@ -117,6 +120,7 @@ export function THEN2<T, R1, R2>(input: MaybePromise<T>, fThen1: (x: T) => Maybe
  * Same as `THEN` but chaining three functions
  */
 export function THEN3<T, R1, R2, R3>(input: MaybePromise<T>, fThen1: (x: T) => MaybePromise<R1>, fThen2: (x: R1) => MaybePromise<R2>, fThen3: (x: R2) => MaybePromise<R3>): MaybePromise<R3> {
+    // istanbul ignore next
     return THEN(THEN(THEN(input, fThen1), fThen2), fThen3)
 }
 
@@ -535,12 +539,9 @@ export function FIND<T>(a: ArrayLike<T>, f: (x: T) => boolean): T | undefined {
  */
 export function FIND_LAST<T>(a: ArrayLike<T>, f: (x: T) => boolean): T | undefined {
     if (!a) return undefined
-    // Optimization when it's actually an array, scan from the end instead of scanning forward
+    // Optimization when it's actually an array.
     if (Array.isArray(a)) {
-        for (let i = a.length; --i >= 0;) {
-            if (f(a[i])) return a[i]
-        }
-        return undefined
+        return a.findLast(f)
     }
     // Read the iterator, keeping the last one that succeeded
     let lastSuccess: T | undefined = undefined

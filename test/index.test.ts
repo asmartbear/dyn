@@ -57,6 +57,16 @@ test('ITER', () => {
     expect(D.isIterable(iter2)).toEqual(true)
     expect(Array.isArray(iter2)).toEqual(false)
     expect(D.ARRAY(iter2)).toEqual([[1, 2], [3, 4]])
+
+    expect(D.isIterable(undefined)).toBeFalsy()
+    expect(D.isIterable(null)).toBeFalsy()
+    expect(D.isIterable("hi")).toBeFalsy()
+    expect(D.isIterable(new Date())).toBeFalsy()
+
+    expect(D.isIterator(undefined)).toBeFalsy()
+    expect(D.isIterator(null)).toBeFalsy()
+    expect(D.isIterator("hi")).toBeFalsy()
+    expect(D.isIterator(new Date())).toBeFalsy()
 })
 
 test('MAP / aMAP', async () => {
@@ -236,6 +246,23 @@ test('MAX / aMAX', async () => {
     await tst(["abcd", "no way joe"], 10)
     await tst(["abcd", "no way jose"], 4)
     await tst(["no way jose"], 2)
+})
+
+test('MIN', async () => {
+    const tst = (lst: string[], want: number) => {
+        expect(D.MIN(99, lst, x => x == "no way jose" ? undefined : x.length)).toBe(want)
+    }
+
+    await tst([], 99)
+    await tst([""], 0)
+    await tst(["ab"], 2)
+    await tst(["ab", "abc"], 2)
+    await tst(["abcd", "abc"], 3)
+    await tst(["abcd", "abc", "abc", "abc", "abc", "abc", "abc", "abc"], 3)
+    await tst(["abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc"], 3)
+    await tst(["this is even longer", "no way joe"], 10)
+    await tst(["this is even longer", "no way jose"], 19)
+    await tst(["no way jose"], 99)
 })
 
 test('FIND / aFIND', async () => {
